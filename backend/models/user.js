@@ -4,22 +4,22 @@ const userSchema = new mongoose.Schema(
     {
         username: {
             type: String,
-            require: true,
+            required: true,
             unique: true,
             trim: true
         },
         email: {
             type: String,
-            require: true,
+            required: true,
             unique: true,
             lowercase: true
         },
         password: {
             type: String,
-            require: true
+            required: true
         },
     },
     {timestamps: true}  // for createdAt, updatedAt auto-add 
 )
 
-export const user = mongoose.model("User", userSchema)
+export const User = mongoose.model("User", userSchema)

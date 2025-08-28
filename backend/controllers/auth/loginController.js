@@ -1,4 +1,4 @@
-import { user } from "../../models/user.js";
+import { User } from "../../models/User.js";
 import bcrypt from "bcryptjs"
 import  jwt  from "jsonwebtoken";
 
@@ -7,7 +7,7 @@ export const loginController = async (req, res) => {
     try{
         const {email, password} = req.body;
      // check if user exists
-     const user = await  user.findOne({ email });
+     const user = await  User.findOne({ email });
      if(!user){
         return res.status(400).json({message: "User not found"})
      }
