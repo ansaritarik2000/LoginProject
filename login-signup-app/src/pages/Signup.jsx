@@ -34,19 +34,18 @@ const Signup = () => {
   // Submit handler
   const onSubmit = async (data) => {
     console.log("Signup Data", data);
-    try{
-      await registerUser ({
+    try {
+      await registerUser({
         username: data.username,
         email: data.email,
         password: data.password,
       });
-      setMessage("Signup successful! Redirecting to login...")
+      setMessage("Signup successful! Redirecting to login...");
       setTimeout(() => {
-        navigate("/")
-      }, 1500)
-    }
-    catch(err){
-      setMessage(err.message || "signup failed")
+        navigate("/");
+      }, 1500);
+    } catch (err) {
+      setMessage(err.message || "signup failed");
     }
   };
 
@@ -73,7 +72,7 @@ const Signup = () => {
               </p>
             )}
           </div>
-            {/* email  */}
+          {/* email  */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Email
@@ -84,13 +83,13 @@ const Signup = () => {
               placeholder="Enter your email"
               className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
             />
-            {errors.email &&(
+            {errors.email && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.email.message}
               </p>
             )}
           </div>
-            {/* password */}
+          {/* password */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Password
@@ -101,7 +100,7 @@ const Signup = () => {
               placeholder="Create a password"
               className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
             />
-            {errors.password &&(
+            {errors.password && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.password.message}
               </p>
@@ -132,6 +131,18 @@ const Signup = () => {
             Signup
           </button>
         </form>
+
+        {message && (
+          <p
+            className={`text-center mt-4 font-medium ${
+              message.toLowerCase().includes("success")
+                ? "text-green-600"
+                : "text-red-600"
+            }`}
+          >
+            {message}
+          </p>
+        )}
 
         <p className="text-sm text-center mt-4">
           Already have an account?{" "}
