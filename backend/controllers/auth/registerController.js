@@ -8,13 +8,15 @@ export const registerController = async (req, res) => {
     
     // validation
     if(!username || !email || !password){
-        return res.status(400).json({ mesaage: "All fields are required" })
+        return res.status(400).json({ message: "All fields are required" })
     }
+
     // check if user already exists
     const existstingUser = await User.findOne({ email })
     if(existstingUser){
-        return res.status(400).json({ mesaage: "User already exists" })
+        return res.status(400).json({ message: "User already exists" })
     }
+
       // hash password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -27,10 +29,11 @@ export const registerController = async (req, res) => {
     })
 
     await newUser.save();
+    
     res.status(201).json({ message: "User Register Successfully", user: {id: newUser._id,username:newUser.username, email: newUser.email }
     })
    }
    catch(error){
-    res.status(500).json({ message: "Server Error", error: error.mesaage})
+    res.status(500).json({ message: "Server Error", error: error.message})
    } 
 }

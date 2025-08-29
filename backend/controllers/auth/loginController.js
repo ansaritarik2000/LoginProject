@@ -24,7 +24,7 @@ export const loginController = async (req, res) => {
         process.env.JWT_SECRET,
         { expiresIn: "1d"}
       )
-      res.status(200).json({message: "Login Successfully", token, user: {id: user._id, email: user.email} });
+      res.status(200).json({message: "Login Successfully", token, user: {id: user._id, email: user.email, username: user.username} });
     } catch (error){
         res.status(500).json({message: "Server error", error: error.message})
     }
