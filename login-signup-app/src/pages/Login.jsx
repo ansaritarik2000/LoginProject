@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { z } from "zod";
+import { Link, useNavigate } from "react-router-dom";
+import { email, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { loginUser } from "../services/authService";
 
 // ✅ Validation schema
 const loginSchema = z.object({
@@ -11,6 +12,9 @@ const loginSchema = z.object({
 });
 
 const Login = () => {
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -20,14 +24,27 @@ const Login = () => {
   });
 
   // ✅ On submitF
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log("Form Data:", data);
-    alert("Login successful!");
+    try{
+      const response = await loginUser({
+        email: data.email,
+        password: data.password,
+      })
+      localStorage.setItem("token", response.token)
+
+      setMessage(`Login Successfully! Welcome ${response.user.username}`)
+    }
+    catch(err){
+      setMessage(err.message || "Login failed");
+    }
   };
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
         <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
+
+         {message && <p className="text-center text-green-500 mb-2">{message}</p>}
 
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div>
